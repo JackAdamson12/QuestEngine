@@ -1,0 +1,25 @@
+name: QuestEngine
+version: '1.0.0'
+main: org.example.questengine.Main
+api-version: '26.3'
+author: b1tdancer
+description: Minecraft quest editor and engine
+softdepend: [LuckPerms]
+
+permissions:
+  questengine.editor:
+    description: Allows access to QuestEngine editor
+    default: op
+
+commands:
+  qeditor:
+    description: Enable or disable quest editor mode
+    usage: /qeditor
+    permission: questengine.editor
+    permission-message: "You don't have permission!"
+
+  spawnmob:
+    description: Spawn mob
+    usage: /spawnmob <entity> here
+    permission: questengine.editor
+    permission-message: "You don't have permission!"
