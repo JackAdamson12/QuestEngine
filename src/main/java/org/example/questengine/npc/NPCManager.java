@@ -4,7 +4,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.util.RayTraceResult;
+import org.example.questengine.npc.sourse.EditManager;
 import org.example.questengine.npc.sourse.NPCSessionManager;
+import org.example.questengine.npc.sourse.gui.panels.MainMenu;
 
 import java.util.UUID;
 
@@ -14,11 +16,21 @@ public class NPCManager
     private UUID entityUUID;
     private Entity entity;
     private final NPCSessionManager npcSessionManager;
+    private final MainMenu mainMenu;
+
+    private EditManager editManager;
 
     public NPCManager(NPCSessionManager npcSessionManager)
     {
         this.npcSessionManager = npcSessionManager;
+        this.mainMenu = new MainMenu();
     }
+
+    public EditManager getEditManager()
+    {
+        return editManager;
+    }
+
 
     public boolean choseEntity(Player player)
     {
@@ -31,17 +43,22 @@ public class NPCManager
 
         entity = result.getHitEntity();
         entityUUID = entity.getUniqueId();
+        editManager = new EditManager(entity);
 
         npcSessionManager.addSession(player.getUniqueId(),this);
-        //editEntity();
+        editEntity(player);
 
-       // npcSessionManager.removeSession(player.getUniqueId());
         return true;
     }
 
-    public void editEntity(Player player)
+    private void editEntity(Player player)
     {
+        mainMenu.openMenu(player);
+    }
 
+    public void finishEdit(Player player)
+    {
+        mainMenu.closeMenu(player);
     }
 
 }

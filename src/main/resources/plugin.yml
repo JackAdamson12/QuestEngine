@@ -23,3 +23,9 @@ commands:
     usage: /spawnmob <entity> here
     permission: questengine.editor
     permission-message: "You don't have permission!"
+
+  editthis:
+    description: Edit mobs
+    usage: /editthis
+    permission: questengine.editor
+    permission-message: "You don't have permission!"

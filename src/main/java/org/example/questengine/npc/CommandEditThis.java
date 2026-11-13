@@ -11,11 +11,13 @@ public class CommandEditThis implements CommandExecutor
 {
     private final CommandQuestEdit commandQuestEdit;
     private final NPCSessionManager npcSessionManager;
+    private final NPCManager npcManager;
 
     public  CommandEditThis(CommandQuestEdit commandQuestEdit, NPCSessionManager npcSessionManager)
     {
         this.commandQuestEdit = commandQuestEdit;
         this.npcSessionManager = npcSessionManager;
+        this.npcManager = new NPCManager(npcSessionManager);
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
@@ -40,6 +42,8 @@ public class CommandEditThis implements CommandExecutor
             sender.sendMessage("Npc are not found");
             return true;
         }
+
+        npcManager.choseEntity(player);
 
 
 
