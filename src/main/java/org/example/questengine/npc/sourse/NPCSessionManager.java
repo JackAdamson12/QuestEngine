@@ -23,11 +23,6 @@ public class NPCSessionManager
             return false;
         }
 
-        if(checkSession(user))
-        {
-            return false;
-        }
-
         ActiveSessions.put(user, session);
         return true;
 

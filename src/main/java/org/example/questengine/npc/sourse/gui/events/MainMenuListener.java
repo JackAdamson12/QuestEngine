@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.example.questengine.npc.NPCManager;
 import org.example.questengine.npc.sourse.EditManager;
@@ -24,22 +26,38 @@ public class MainMenuListener implements Listener
         this.npcSessionManager = npcSessionManager;
     }
 
+    private static final String MENU_TITLE = "NPC Editor";
+
     private final NPCNameDialog npcNameDialog = new NPCNameDialog();
+
+    @EventHandler
+    public void onMenuDrag(InventoryDragEvent event) {
+        if (event.getView().getTitle().equals(MENU_TITLE)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        npcSessionManager.removeSession(event.getPlayer().getUniqueId());
+    }
+
     @EventHandler
     public void onMenuClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player player)) {
             return;
         }
-        if (!event.getView().getTitle().equals("NPC Editor")) {
+        if (!event.getView().getTitle().equals(MENU_TITLE)) {
             return;
         }
+
+        event.setCancelled(true);
+
         if (event.getClickedInventory() == null)
             return;
 
         if (event.getClickedInventory() != event.getView().getTopInventory())
             return;
-
-        event.setCancelled(true);
 
         ItemStack clickedItem = event.getCurrentItem();
 
@@ -47,6 +65,10 @@ public class MainMenuListener implements Listener
             return;
 
         NPCManager npcManager = npcSessionManager.getSession(player.getUniqueId());
+        if (npcManager == null) {
+            player.closeInventory();
+            return;
+        }
         EditManager editManager = npcManager.getEditManager();
 
         if (event.getSlot() == 10) {

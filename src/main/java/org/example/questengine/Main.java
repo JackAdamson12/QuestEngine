@@ -8,6 +8,7 @@ import org.example.questengine.npc.CommandEditThis;
 import org.example.questengine.npc.NPCManager;
 import org.example.questengine.npc.sourse.EditManager;
 import org.example.questengine.npc.sourse.NPCSessionManager;
+import org.example.questengine.npc.sourse.dialogapi.listener.ClickMobListener;
 import org.example.questengine.npc.sourse.gui.events.MainMenuListener;
 
 public final class Main extends JavaPlugin
@@ -20,6 +21,8 @@ public final class Main extends JavaPlugin
     @Override
     public void onEnable()
     {
+        getServer().getPluginManager().registerEvents(new ClickMobListener(),this);
+
         getCommand("qeditor").setExecutor(questEdit);
         getCommand("spawnmob").setExecutor(new CommandSpawnMob(questEdit));
 

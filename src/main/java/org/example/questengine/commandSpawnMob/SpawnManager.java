@@ -2,6 +2,7 @@ package org.example.questengine.commandSpawnMob;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -33,6 +34,11 @@ public class SpawnManager
             return false;
         }
         location = result.getHitPosition().toLocation(player.getWorld());
+        BlockFace face = result.getHitBlockFace();
+        if (face != null)
+        {
+            location.add(face.getDirection().multiply(0.5));
+        }
         location.add(0, 0.1, 0);
 
         try

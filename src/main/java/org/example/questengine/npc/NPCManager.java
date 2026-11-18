@@ -1,5 +1,6 @@
 package org.example.questengine.npc;
 
+import org.bukkit.FluidCollisionMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -34,7 +35,14 @@ public class NPCManager
 
     public boolean choseEntity(Player player)
     {
-        RayTraceResult result = player.rayTraceEntities(15);
+        RayTraceResult result = player.getWorld().rayTrace(
+                player.getEyeLocation(),
+                player.getEyeLocation().getDirection(),
+                15,
+                FluidCollisionMode.NEVER,
+                true,
+                0.0,
+                e -> !(e instanceof Player));
 
         if(result == null || result.getHitEntity() == null)
         {

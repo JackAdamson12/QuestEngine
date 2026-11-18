@@ -43,11 +43,6 @@ public class CommandEditThis implements CommandExecutor
             return true;
         }
 
-        npcManager.choseEntity(player);
-
-
-
-
 
         return true;
     }

@@ -22,7 +22,7 @@ public class NPCNameDialog {
 
                 .base(DialogBase.builder(Component.text("Edit NPC Name")).inputs(List.of(
                         DialogInput.text("npc_name", Component.text("NPC Name"))
-                                        .initial("")
+                                        .initial(editManager.getName() == null ? "" : editManager.getName())
                                         .maxLength(64)
                                         .width(250)
                                         .build()))
@@ -37,6 +37,7 @@ public class NPCNameDialog {
 
                                             if (name == null || name.isBlank()) {
                                                 p.sendMessage("Name cannot be empty!");
+                                                open(p, editManager);
                                                 return;
                                             }
 
